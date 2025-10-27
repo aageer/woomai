@@ -36,3 +36,4 @@ Importance of UX and UI in maintaining a positive user experience and seamless i
 
 What's next for woom-
 More sources and better recall: arXiv + PubMed + OpenAlex, and user PDF libraries with on‑device caches. Rich citations/notes: one‑click exports, scholarly formats, Zotero/Mendeley integrations. Collaborative reading: shared highlights, comments, and study sessions. Multimodal understanding: figure/table Q&A and equation‑aware summaries.
+# woomai
