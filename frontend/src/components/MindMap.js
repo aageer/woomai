@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Brain, FileText, Link, ChevronRight, ChevronDown, Loader2, AlertCircle } from "lucide-react";
 import "./MindMap.css";
+import API_BASE_URL from "../config/api";
 
 const MindMap = ({ pdfUrl }) => {
   const [mindMapData, setMindMapData] = useState(null);
@@ -23,7 +24,7 @@ const MindMap = ({ pdfUrl }) => {
     
     try {
       // First check if PDF is loaded
-      const testResponse = await fetch("http://localhost:5001/test-mindmap");
+      const testResponse = await fetch(`${API_BASE_URL}/test-mindmap`);
       const testData = await testResponse.json();
       
       if (!testData.pdf_exists) {
@@ -33,7 +34,7 @@ const MindMap = ({ pdfUrl }) => {
       
       console.log("PDF status:", testData);
       
-      const response = await fetch("http://localhost:5001/generate-mindmap", {
+      const response = await fetch(`${API_BASE_URL}/generate-mindmap`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -382,7 +383,7 @@ const MindMap = ({ pdfUrl }) => {
           <button
             onClick={async () => {
               try {
-                const response = await fetch("http://localhost:5001/test-mindmap");
+                const response = await fetch(`${API_BASE_URL}/test-mindmap`);
                 const data = await response.json();
                 console.log("Debug info:", data);
                 alert(`PDF Status: ${data.pdf_exists ? 'Loaded' : 'Not loaded'}\nPath: ${data.pdf_path || 'None'}`);

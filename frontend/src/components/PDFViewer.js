@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { MessageSquare, FileText, Send, Loader2, AlertCircle, Mic, Square, Share2 } from "lucide-react";
 import "./PDFViewer.css";
 import { useLanguage } from "../lang/LanguageContext";
+import API_BASE_URL from "../config/api";
 
 const PDFViewer = () => {
   const [activeTab, setActiveTab] = useState("analysis");
@@ -66,8 +67,8 @@ const PDFViewer = () => {
   const [vadMaxUtteranceMs, setVadMaxUtteranceMs] = useState(30000);
 
   const { t, language } = useLanguage();
-  // PDF URL from local backend
-  const pdfUrl = "http://localhost:5001/pdf";
+  // PDF URL from backend
+  const pdfUrl = `${API_BASE_URL}/pdf`;
   const pageNumberToDivRef = useRef(new Map());
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -111,7 +112,7 @@ const PDFViewer = () => {
 
         // First check if backend is responding
         try {
-          const healthCheck = await fetch("http://localhost:5001/pdf", { method: "HEAD" });
+          const healthCheck = await fetch(`${API_BASE_URL}/pdf`, { method: "HEAD" });
           if (healthCheck.status === 202) {
             setError("Backend is still loading the PDF. Please wait a moment and refresh the page.");
             return;
@@ -257,7 +258,7 @@ const PDFViewer = () => {
     try { sendSelectionForMindmap(text); } catch {}
 
     try {
-      const response = await fetch("http://localhost:5001/process-selection", {
+      const response = await fetch(`${API_BASE_URL}/process-selection`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -283,7 +284,7 @@ const PDFViewer = () => {
     try {
       setMindmapLoading(true);
       setMindmapError("");
-      const res = await fetch("http://localhost:5001/mindmap", {
+      const res = await fetch(`${API_BASE_URL}/mindmap`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text })
@@ -444,7 +445,7 @@ document.getElementById('fs').onclick = () => {
       try {
         setMindmapLoading(true);
         setMindmapError("");
-        const res = await fetch("http://localhost:5001/mindmap", {
+        const res = await fetch(`${API_BASE_URL}/mindmap`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ scope: 'document' })
@@ -548,7 +549,7 @@ document.getElementById('fs').onclick = () => {
       form.append("audio", blob, `recording.${ext}`);
       form.append("language", "en");
 
-      const res = await fetch("http://localhost:5001/transcribe", {
+      const res = await fetch(`${API_BASE_URL}/transcribe`, {
         method: "POST",
         body: form,
       });
@@ -579,7 +580,7 @@ document.getElementById('fs').onclick = () => {
       form.append("language", "hi");
       form.append("engine", "google");
 
-      const res = await fetch("http://localhost:5001/transcribe", {
+      const res = await fetch(`${API_BASE_URL}/transcribe`, {
         method: "POST",
         body: form,
       });
@@ -856,7 +857,7 @@ document.getElementById('fs').onclick = () => {
 
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:5001/ask", {
+      const response = await fetch(`${API_BASE_URL}/ask`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -917,7 +918,7 @@ document.getElementById('fs').onclick = () => {
 
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:5001/ask-hindi", {
+      const response = await fetch(`${API_BASE_URL}/ask-hindi`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -1017,7 +1018,7 @@ document.getElementById('fs').onclick = () => {
       }
 
       // Stream via GET to allow faster start (browser can stream progressively)
-      const url = `http://localhost:5001/tts?` + new URLSearchParams({ text });
+      const url = `${API_BASE_URL}/tts?` + new URLSearchParams({ text });
       // Set src directly for progressive playback
       audioRef.current.src = url;
       // When playback ends, resume Podcast Mode if it was active

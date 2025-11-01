@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Upload, FileText, Loader2, AlertCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import "./LocalPDFUpload.css";
+import API_BASE_URL from "../config/api";
 
 const LocalPDFUpload = () => {
   const [file, setFile] = useState(null);
@@ -34,7 +35,7 @@ const LocalPDFUpload = () => {
       formData.append("pdf", file);
 
       // Upload the file to the backend
-      const response = await fetch("http://localhost:5001/upload-pdf", {
+      const response = await fetch(`${API_BASE_URL}/upload-pdf`, {
         method: "POST",
         body: formData,
       });

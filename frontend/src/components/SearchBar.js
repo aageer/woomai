@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Search, Loader2, Mic, MicOff, Square } from "lucide-react";
 import "./SearchBar.css";
 import { useLanguage } from "../lang/LanguageContext";
+import API_BASE_URL from "../config/api";
 
 const SearchBar = ({ showMic = true }) => {
   const { t, language } = useLanguage();
@@ -48,7 +49,7 @@ const SearchBar = ({ showMic = true }) => {
     setError("");
 
     try {
-      const response = await fetch("http://localhost:5001/search", {
+      const response = await fetch(`${API_BASE_URL}/search`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -155,7 +156,7 @@ const SearchBar = ({ showMic = true }) => {
       formData.append('audio', audioBlob, `recording.${ext}`);
       formData.append('language', 'en');
 
-      const response = await fetch("http://localhost:5001/transcribe", {
+      const response = await fetch(`${API_BASE_URL}/transcribe`, {
         method: "POST",
         body: formData,
       });

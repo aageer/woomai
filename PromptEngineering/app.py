@@ -51,8 +51,15 @@ import shutil
 
 # ─── Flask Setup ───────────────────────────────────────────────────────────────
 app = Flask(__name__)
-# Permissive CORS for Cloud Run + local dev (no credentials with wildcard)
-CORS(app, resources={r"/*": {"origins": ["http://localhost:3000", "*"]}}, supports_credentials=False)
+# Permissive CORS for Cloud Run + local dev + Vercel deployment
+CORS(app, resources={r"/*": {
+    "origins": [
+        "http://localhost:3000",
+        "https://woomai.vercel.app",
+        "https://*.vercel.app",
+        "*"
+    ]
+}}, supports_credentials=False)
 logging.basicConfig(level=logging.INFO)
 
 # Ensure preflight (OPTIONS) succeeds and attach CORS headers consistently

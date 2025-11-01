@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { ExternalLink, FileText, Calendar, User, Loader2 } from "lucide-react";
 import "./ResearchPapers.css";
 import { useLanguage } from "../lang/LanguageContext";
+import API_BASE_URL from "../config/api";
 
 const ResearchPapers = () => {
   const [results, setResults] = useState([]);
@@ -33,7 +34,7 @@ const ResearchPapers = () => {
 
     try {
       // Step 1: Log the click
-      await fetch("http://localhost:5001/log-click", {
+      await fetch(`${API_BASE_URL}/log-click`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -42,7 +43,7 @@ const ResearchPapers = () => {
       });
 
       // Step 2: Update PDF and reload model
-      const updateResponse = await fetch("http://localhost:5001/update-pdf", {
+      const updateResponse = await fetch(`${API_BASE_URL}/update-pdf`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -202,7 +203,7 @@ export default ResearchPapers;
 
 //     try {
 //       // Step 1: Log the click
-//       await fetch("http://localhost:5001/log-click", {
+//       await fetch(`${API_BASE_URL}/log-click`, {
 //         method: "POST",
 //         headers: {
 //           "Content-Type": "application/json",
@@ -211,7 +212,7 @@ export default ResearchPapers;
 //       });
 
 //       // Step 2: Update PDF and reload model
-//       const updateResponse = await fetch("http://localhost:5001/update-pdf", {
+//       const updateResponse = await fetch(`${API_BASE_URL}/update-pdf`, {
 //         method: "POST",
 //         headers: {
 //           "Content-Type": "application/json",
