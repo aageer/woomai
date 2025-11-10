@@ -1,12 +1,12 @@
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { Search, Loader2, Mic, MicOff, Square } from "lucide-react";
+import { Search, Loader2, Mic, Square } from "lucide-react";
 import "./SearchBar.css";
 import { useLanguage } from "../lang/LanguageContext";
 import API_BASE_URL from "../config/api";
 
 const SearchBar = ({ showMic = true }) => {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import React, { createContext, useContext, useMemo, useState, useCallback } from 'react';
 import { translations } from './translations';
 
 const LanguageContext = createContext({
@@ -16,10 +16,10 @@ export const LanguageProvider = ({ children }) => {
     }
   });
 
-  const setLanguage = (lang) => {
+  const setLanguage = useCallback((lang) => {
     setLanguageState(lang);
     try { localStorage.setItem('appLanguage', lang); } catch {}
-  };
+  }, []);
 
   const t = useMemo(() => {
     const dict = translations[language] || translations.en;
