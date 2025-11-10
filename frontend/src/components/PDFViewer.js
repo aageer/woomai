@@ -398,7 +398,7 @@ function nodeRadius(d){
 function shortLabel(d){
   const raw = (d.label || d.id || '').trim();
   if (!raw) return d.id;
-  const words = raw.split(/\s+/).slice(0,3).join(' ');
+  const words = raw.split(/\s+/).slice(0,3).join(' '); // eslint-disable-line no-useless-escape
   return words.length > 28 ? words.slice(0,28) + '…' : words;
 }
 
@@ -761,6 +761,7 @@ document.getElementById('fs').onclick = () => {
       }
     }, 1500);
     return () => clearInterval(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // English entrypoint: ensure Hindi is off, stop any existing VAD, then start
@@ -846,6 +847,7 @@ document.getElementById('fs').onclick = () => {
       }, 2500);
       return () => clearInterval(id);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [language, isPodcastHindiMode, autoHindiContinuous]);
 
   const submitQuestion = async (questionText) => {
@@ -986,6 +988,7 @@ document.getElementById('fs').onclick = () => {
     if (last && last.type === "bot" && last.message) {
       playElevenLabs(last.message);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chatHistory]);
 
   // Ensure only the active language's podcast mode remains enabled
@@ -1095,7 +1098,7 @@ document.getElementById('fs').onclick = () => {
     if (!pageDiv) return;
     const textLayer = pageDiv.querySelector('.textLayer');
     if (!textLayer) return;
-    const target = (snippet || '').trim().toLowerCase().replace(/\s+/g, ' ');
+    const target = (snippet || '').trim().toLowerCase().replace(/\s+/g, ' '); // eslint-disable-line no-useless-escape
     if (!target) return false;
     try {
       const index = buildSpanIndex(textLayer);
@@ -1244,6 +1247,7 @@ document.getElementById('fs').onclick = () => {
         clearTimeout(selectionTimeoutRef.current);
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
