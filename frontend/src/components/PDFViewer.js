@@ -15,7 +15,7 @@ const PDFViewer = () => {
   const [isRendering, setIsRendering] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [mindmapMd, setMindmapMd] = useState("");
-  const [mindmapSummary] = useState("");
+  const [mindmapSummary, setMindmapSummary] = useState("");
   const [mindmapLoading, setMindmapLoading] = useState(false);
   const [mindmapError, setMindmapError] = useState("");
   const [graphData, setGraphData] = useState(null);
