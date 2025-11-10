@@ -62,7 +62,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { BookOpen, Search, FileText, ArrowLeft, LogOut, User } from "lucide-react";
+import { BookOpen, Search, FileText, ArrowLeft, LogOut } from "lucide-react";
 import "./Header.css";
 import { useLanguage } from "../lang/LanguageContext";
 

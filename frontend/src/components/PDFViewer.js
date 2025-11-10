@@ -15,7 +15,7 @@ const PDFViewer = () => {
   const [isRendering, setIsRendering] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [mindmapMd, setMindmapMd] = useState("");
-  const [mindmapSummary, setMindmapSummary] = useState("");
+  const [mindmapSummary] = useState("");
   const [mindmapLoading, setMindmapLoading] = useState(false);
   const [mindmapError, setMindmapError] = useState("");
   const [graphData, setGraphData] = useState(null);
@@ -31,7 +31,7 @@ const PDFViewer = () => {
   const audioRef = useRef(null);
   const currentAudioUrlRef = useRef(null);
   // Wake-word/SR integrations removed
-  const postWakeActiveRef = useRef(false);
+  // const postWakeActiveRef = useRef(false); // Unused
   const postWakeStreamRef = useRef(null);
   const postWakeRecorderRef = useRef(null);
   const postWakeChunksRef = useRef([]);
@@ -47,13 +47,13 @@ const PDFViewer = () => {
   // Podcast Mode (VAD) state and controls
   const [isPodcastMode, setIsPodcastMode] = useState(false);
   const [isPodcastHindiMode, setIsPodcastHindiMode] = useState(false);
-  const [autoHindiContinuous, setAutoHindiContinuous] = useState(true);
+  const [autoHindiContinuous] = useState(true);
   // Hysteresis thresholds to reduce flicker: higher to start, lower to keep speaking
-  const [vadStartThreshold, setVadStartThreshold] = useState(0.03);
-  const [vadStopThreshold, setVadStopThreshold] = useState(0.015);
+  const [vadStartThreshold] = useState(0.03);
+  const [vadStopThreshold] = useState(0.015);
   // Timing tuned to avoid premature stops (allow longer pauses and longer utterances)
-  const [vadMinSpeechMs, setVadMinSpeechMs] = useState(1200);
-  const [vadSilenceMs, setVadSilenceMs] = useState(3500);
+  const [vadMinSpeechMs] = useState(1200);
+  const [vadSilenceMs] = useState(3500);
   const vadSpeechStartRef = useRef(0);
   const ttsSuspendRef = useRef(false);
   const isTtsPlayingRef = useRef(false);
@@ -61,12 +61,12 @@ const PDFViewer = () => {
   const podcastHindiModeRef = useRef(false);
   const vadRmsEmaRef = useRef(0);
   // Grace and cooldown windows to avoid chatter
-  const [vadGraceMs, setVadGraceMs] = useState(900); // ignore brief dips right after speech starts
-  const [vadCooldownMs, setVadCooldownMs] = useState(1400); // ignore starts shortly after an end
+  const [vadGraceMs] = useState(900); // ignore brief dips right after speech starts
+  const [vadCooldownMs] = useState(1400); // ignore starts shortly after an end
   const vadLastEndRef = useRef(0);
-  const [vadMaxUtteranceMs, setVadMaxUtteranceMs] = useState(30000);
+  const [vadMaxUtteranceMs] = useState(30000);
 
-  const { t, language } = useLanguage();
+  const { language } = useLanguage();
   // PDF URL from backend
   const pdfUrl = `${API_BASE_URL}/pdf`;
   const pageNumberToDivRef = useRef(new Map());
@@ -218,6 +218,7 @@ const PDFViewer = () => {
     };
 
     initializePDF();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Ensure sidebar tab content starts at the top when switching tabs
@@ -306,19 +307,20 @@ const PDFViewer = () => {
     }
   };
 
+  // eslint-disable-next-line no-unused-vars
   const buildMindmapHtml = (md) => {
     const safeMd = (md || "- Mindmap\n  - No content");
-    return `<!doctype html><html><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><style>
+    return `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><style>
 html,body{height:100%;margin:0;background:#0b1220;color:#e5e7eb;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif}
 #mind{width:100%;height:100vh}
 .summary{padding:10px 14px;background:#0f172a;border-bottom:1px solid #1f2a44;color:#cbd5e1}
 code,pre{color:inherit}
 </style>
-<script src=\"https://cdn.jsdelivr.net/npm/d3@7\"></script>
-<script src=\"https://cdn.jsdelivr.net/npm/markmap-view@0.16.1\"></script>
-<script src=\"https://cdn.jsdelivr.net/npm/markmap-lib@0.16.1/dist/browser/index.min.js\"></script></head>
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<script src="https://cdn.jsdelivr.net/npm/markmap-view@0.16.1"></script>
+<script src="https://cdn.jsdelivr.net/npm/markmap-lib@0.16.1/dist/browser/index.min.js"></script></head>
 <body>
-<div id=\"mind\"></div>
+<div id="mind"></div>
 <script>
   const md = ${JSON.stringify(safeMd)};
   window.addEventListener('DOMContentLoaded', () => {
