@@ -45,7 +45,14 @@ from data_extraction import extract_sections
 from Research_paper_function import generate_short_query
 from Search_Papers_Arvix import search_arxiv_papers
 from pdf_utils import ensure_pdf_loaded, current_pdf_path, model_loading, download_pdf
-from API_KEY import ELEVENLABS_API_KEY
+# Get ELEVENLABS_API_KEY from environment or API_KEY.py
+try:
+    from API_KEY import ELEVENLABS_API_KEY
+except ImportError:
+    ELEVENLABS_API_KEY = os.environ.get("ELEVENLABS_API_KEY")
+    
+if not ELEVENLABS_API_KEY:
+    raise ValueError("ELEVENLABS_API_KEY environment variable must be set or API_KEY.py must exist")
 from werkzeug.utils import secure_filename
 import shutil
 

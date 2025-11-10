@@ -5,7 +5,14 @@ Function: generate_short_query(long_prompt_string)--> returns shortened prompt.
 import google.generativeai as genai
 from dotenv import load_dotenv
 import os
-from API_KEY import API_KEY
+# Get API key from environment variable or try to import from API_KEY
+try:
+    from API_KEY import API_KEY
+except ImportError:
+    API_KEY = os.environ.get("GEMINI_API_KEY")
+    
+if not API_KEY:
+    raise ValueError("GEMINI_API_KEY environment variable must be set or API_KEY.py must exist")
 
 # Load environment variables
 load_dotenv()

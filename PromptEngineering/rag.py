@@ -5,10 +5,18 @@ from chromadb import Documents, EmbeddingFunction, Embeddings
 from google.api_core import retry
 import chromadb
 from data_extraction import extract_sections
-from API_KEY import API_KEY
 import os
 import pdfplumber
 import re
+
+# Get API key from environment variable or try to import from API_KEY
+try:
+    from API_KEY import API_KEY
+except ImportError:
+    API_KEY = os.environ.get("GEMINI_API_KEY")
+
+if not API_KEY:
+    raise ValueError("GEMINI_API_KEY environment variable must be set or API_KEY.py must exist")
 
 logging.basicConfig(level=logging.INFO)
 genai.configure(api_key=API_KEY)
