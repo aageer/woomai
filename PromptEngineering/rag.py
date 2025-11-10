@@ -73,6 +73,9 @@ def get_contextual_definition(highlighted_text):
 # Passage: {passage.replace('\n', ' ')}
 # """
 
+    # Fix f-string: can't use backslash in f-string expression
+    cleaned_passage = passage.replace('\n', ' ')
+    
     prompt = f"""
 You must return valid Markdown only.
 
@@ -92,7 +95,7 @@ Formatting Rules:
 - Do not use hashtags (#), bullet points, or code blocks.
 - Keep all text in standard Markdown without special characters.
 
-Passage: {passage.replace('\n', ' ')}
+Passage: {cleaned_passage}
 """
 
 
